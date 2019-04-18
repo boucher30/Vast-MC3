@@ -2,6 +2,14 @@
 <h3>Professor Sun Information Visualization Final Project</h3>
 VAST Challenge 2018 MC3
 
+<h5 style = "font: 70px;">Members:</h5>
+<ul>
+  <li>RJ Boucher</li>
+  <li>Vince Pedata</li>
+  <li>Troy Pastirko</li>
+  <li>Steve Bruman</li>
+</ul>
+
 <div>
   <h5>Reference = http://www.vacommunity.org/VAST+Challenge+2018+MC3</h5>
   <h2>Problem Overview</h2>
@@ -25,13 +33,7 @@ How do the group’s interactions change over time?</li>
 </div>
   
 
-<h5 style = "font: 70px;">Members:</h5>
-<ul>
-  <li>RJ Boucher</li>
-  <li>Vince Pedata</li>
-  <li>Troy Pastirko</li>
-  <li>Steve Bruman</li>
-</ul>
+
 
 
 
