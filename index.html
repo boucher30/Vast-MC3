@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Test Page</title>
+        <script type="text/javascript" src="d3/d3.v3.js"></script>
+    	<style type="text/css">
+		div.bar {
+		display: inline-block;
+		width: 20px;
+		height: 75px;	/* Gets overriden by D3-assigned height below */
+		margin-right: 2px;
+		background-color: teal;
+		     }
+	</style>
+    </head>
+    <body>
+		<select id = "opts">
+		<option value="ds0">  </option>
+		<option value="ds1">Refugio Orrantia</option>
+		<option value="ds2">Melita Scarpaci</option>
+		<option value="ds3">Madeline Nindorf</option>
+		<option value="ds4">Ramiro Gault</option>
+		<option value="ds5">Wilhelmina Nybo</option>
+		<option value="ds6">Augusta Sharp</option>
+		<option value="ds7">May Burton</option>
+		<option value="ds8">Alex Hall</option>
+		<option value="ds9">Lizbeth Jindra</option>
+		<option value="ds10">Jose Ringwald</option>   
+		<option value="ds11">Lottie Grant</option> 		
+		<option value="ds12">Mable Rosenfeldt</option> 
+		<option value="ds13">Ivory Soderling</option> 
+		<option value="ds14">Tiana Sichting</option> 
+		<option value="ds15">Shane Labella</option> 
+		<option value="ds16">Kathi Montcalm</option> 
+		<option value="ds17">Alexander Stevenson</option> 
+		<option value="ds18">Phoebe Hawkins</option> 
+		<option value="ds19">Laurice Eichenberg</option> 
+		<option value="ds20">Herman Todd</option> 
+		<option value="ds21">Sachiko Sanabria</option> 
+		<option value="ds22">Lavona Smola</option>
+		<option value="ds23">Juan Walsh</option> 
+		<option value="ds24">Jane Tyler</option> 
+		<option value="ds25">Palmer Kilborne</option> 
+		<option value="ds26">Sherilyn Coopwood</option> 
+		<option value="ds27">Yulanda Maymon</option> 
+		<option value="ds28">Jaunita Westen</option> 
+		<option value="ds29">Alex Wilkins</option> 
+		<option value="ds30">Bernard Harper</option> 
+		<option value="ds31">Diane Cuti</option> 
+		<option value="ds32">Cory King</option>
+		<option value="ds33">Garrett Sanfilippo</option> 
+		<option value="ds34">Lashay Ruprecht</option> 
+		<option value="ds35">Chanell Luciano</option> 
+		<option value="ds36">Clifford Gibbs</option> 
+		<option value="ds37">Nila Trnka</option> 
+		<option value="ds38">Michelina Lindorf</option> 
+		<option value="ds39">Leann Thresher</option> 
+		<option value="ds40">Alethia Halmick</option> 
+		<option value="ds41">Kerstin Belveal</option> 
+		<option	value="ds42">Sheilah Stachniw</option>
+		<option value="ds43">Richard Fox</option> 
+		<option value="ds44">Ferne Hards</option> 
+		<option value="ds45">Tobi Gatlin</option> 
+		<option value="ds46">Sherrell Biebel</option> 
+		<option value="ds47">Patrick Lane</option> 
+		<option value="ds48">Dylan Ballard</option> 
+		<option value="ds49">Lindsy Henion</option> 
+		<option value="ds50">Timothy Gibson</option> 
+		<option value="ds51">Glen Grant</option> 
+		<option value="ds52">Sara Ballard</option>
+		<option value="ds53">Meryl Pastuch</option> 
+		<option value="ds54">Rosalia Larroque</option> 
+		<option value="ds55">Julie Tierno</option> 
+		<option value="ds56">Terrilyn Overkamp</option> 
+		<option value="ds57">Martha Harris</option> 
+		<option value="ds58">Jenice Savaria</option> 
+		</select>   
+        <script type="text/javascript">
+	var ds0 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+	var ds1 = [0,0,0,5,2,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0]
+	var ds2 = [0,0,0,4,1,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0]
+	var ds3 = [0,0,0,7,4,0,0,1,0,1,0,1,0,0,0,0,1,1,0,0]
+	var ds4 = [0,0,0,4,1,1,0,2,1,0,0,0,1,1,0,0,0,0,0,1]
+	var ds5 = [0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0]
+	var ds6 = [0,0,0,2,0,4,0,4,0,0,0,1,0,1,1,0,0,0,0,1]
+	var ds7 = [0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,2,0,0,0,2]
+	var ds8 = [0,0,0,1,1,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0]
+	var ds9 = [0,0,0,2,3,2,1,1,0,0,0,2,0,1,0,0,1,1,0,0]
+	var ds10 = [0,0,0,4,3,3,0,1,2,2,0,1,2,1,1,0,0,0,0,1]
+	var ds11 = [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0]
+	var ds12 = [1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0]
+	var ds13 = [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0]
+	var ds14 = [0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0]
+	var ds15 = [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+	var ds16 = [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
+	var ds17 = [0,0,0,0,0,1,0,0,1,0,1,1,0,0,0,0,0,0,0,0]
+	var ds18 = [0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0]
+	var ds19 = [0,0,0,0,0,1,0,0,2,0,0,0,0,1,0,0,0,1,0,0]
+	var ds20 = [0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0]
+	var ds21 = [0,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0]
+	var ds22 = [2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0]
+	var ds23 = [0,0,0,2,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0]
+	var ds24 = [2,0,2,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1]
+	var ds25 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0]
+	var ds26 = [0,0,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0]
+	var ds27 = [0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0]
+	var ds28 = [0,0,0,0,0,0,0,0,0,0,0,3,0,0,1,0,0,0,0,0]
+	var ds29 = [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0]
+	var ds30 = [0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+	var ds31 = [0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+	var ds32 = [0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0]
+	var ds33 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2]
+	var ds34 = [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]
+	var ds35 = [0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0]
+	var ds36 = [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0]
+	var ds37 = [0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0]
+	var ds38 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0]
+	var ds39 = [0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+	var ds40 = [0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+	var ds41 = [0,0,0,5,2,1,1,4,2,0,0,1,2,2,1,7,0,11,14,0]
+	var ds42 = [0,0,0,6,5,1,4,2,0,1,0,0,0,2,0,0,0,0,0,0]
+	var ds43 = [13,5,7,17,6,4,5,10,6,2,3,2,3,2,1,1,1,5,2,3]
+	var ds44 = [0,0,0,4,2,1,0,2,1,0,0,1,0,0,0,1,0,1,0,0]
+	var ds45 = [0,0,0,6,4,5,1,2,0,4,1,1,2,0,1,0,1,1,2,0]
+	var ds46 = [0,0,0,7,4,1,3,0,0,0,0,0,2,0,1,6,0,6,0,0]
+	var ds47 = [0,0,0,2,4,1,1,1,1,0,1,1,0,0,0,1,0,0,0,1]
+	var ds48 = [0,0,0,6,4,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+	var ds49 = [0,0,0,5,5,7,2,5,3,2,0,1,1,1,1,1,0,2,1,2]
+	var ds50 = [1,1,1,2,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1]
+	var ds51 = [0,0,0,3,5,3,1,0,2,0,0,1,0,0,1,0,0,0,0,0]
+	var ds52 = [0,0,0,1,2,0,0,0,2,0,0,0,1,0,0,0,0,2,0,1]
+	var ds53 = [0,0,2,11,6,3,4,3,1,2,2,3,0,1,1,1,1,5,0,0]
+	var ds54 = [0,0,0,6,5,3,2,0,0,1,0,0,0,0,1,1,0,8,20,1]
+	var ds55 = [0,0,0,7,2,0,1,2,2,1,0,1,0,0,0,0,0,1,0,0]
+	var ds56 = [1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0]
+	var ds57 = [0,0,0,2,4,0,0,1,0,0,1,1,1,0,0,0,0,1,0,0]
+	var ds58 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+
+	var w = 500;
+	var h = 100;
+	var barPadding = 1;
+
+var canvas = d3.select('body')
+    .append('svg')
+    .attr('width',w)
+    .attr('height',h) 
+    .append('g');
+
+function updateLegend(newData) {
+
+    // bind data
+    var appending = canvas.selectAll('rect')
+       .data(newData);
+
+    // add new elements
+    appending.enter().append('rect');
+
+    // update existing elements
+    appending.transition()
+        .duration(0)
+	.attr("x", function(d, i) {
+			   		return i * (w / newData.length);
+			   })
+			   .attr("y", function(d) {
+			   		return h - (d * 4);
+			   })
+			   .attr("width", w / newData.length - barPadding)
+			   .attr("height", function(d) {
+			   		return d * 4;
+			   })
+			   .attr("fill", function(d) {
+					return "rgb(0, 0, " + (d * 10) + ")";
+			   });
+
+    // remove old elements
+    appending.exit().remove();
+
+}
+
+d3.select('#opts')
+  .on('change', function() {
+    var newData = eval(d3.select(this).property('value'));
+    updateLegend(newData);
+});
+	</script>
+    </body>
+</html> 
