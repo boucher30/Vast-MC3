@@ -130,13 +130,10 @@
 									bottom: 20,
 									left: 50
 								},
-								xScale = d3.scale.time().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
-								yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, maxCount]),
-								xAxis = d3.svg.axis()
-								.scale(xScale),
-								yAxis = d3.svg.axis()
-								.scale(yScale)
-								.orient("left");
+								xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+								yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, maxCount]),
+								xAxis = d3.svg.axisBottom(xScale),
+								yAxis = d3.svg.axisLeft(yScale);
 							
 							vis.append("svg:g")
 								.attr("class", "x axis")
