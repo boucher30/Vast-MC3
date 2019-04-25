@@ -42,8 +42,8 @@
 				  function handleFileSelect(evt) {
 					console.log("Start");
 					var file = evt.target.files[0];
-					var minDate = new Date("01-01-2020");
-					var maxDate = new Date("01-01-2010");
+					var minDate = new Date(2020,1,1);
+					var maxDate = new Date(2010,1,1);
 					var maxCount = 0;
 				 
 					Papa.parse(file, {
@@ -60,7 +60,7 @@
 						if(data[0] == 0){
 							var flag = false;
 							for(var j = 1; !flag && j < type0.length; j++){
-								if(type0[j].Date == a.getDate()){
+								if(type0[j].Date.getDate() == a.getDate()){
 									flag = true;
 									type0[j].Count = type[j].Count + 1;
 									if(type0[j].Count > maxCount){
@@ -70,12 +70,12 @@
 								}
 							}
 							if(!flag){
-								type0.push({"Count": "1", "Date": a.getDate()});
+								type0.push({"Count": "1", "Date": a});
 							}
 						}else if(data[0] == 1){
 							var flag = false;
 							for(var j = 1; !flag && j < type1.length; j++){
-								if(type1[j].Date == a.getDate()){
+								if(type1[j].Date.getDate() == a.getDate()){
 									flag = true;
 									type1[j].Count = type1[j].Count + 1;
 									if(type0[j].Count > maxCount){
@@ -85,12 +85,12 @@
 								}
 							}
 							if(!flag){
-								type1.push({"Count": "1", "Date": a.getDate()});
+								type1.push({"Count": "1", "Date": a});
 							}
 						}else if(data[0] == 2){
 							var flag = false;
 							for(var j = 1; !flag && j < type2.length; j++){
-								if(type2[j].Date == a.getDate()){
+								if(type2[j].Date.getDate() == a.getDate()){
 									flag = true;
 									type2[j].Count = type2[j].Count + 1;
 									if(type0[j].Count > maxCount){
@@ -100,12 +100,12 @@
 								}
 							}
 							if(!flag){
-								type2.push({"Count": "1", "Date": a.getDate()});
+								type2.push({"Count": "1", "Date": a});
 							}
 						}else if(data[0] == 3){
 							var flag = false;
 							for(var j = 1; !flag && j < type3.length; j++){
-								if(type3[j].Date == a.getDate()){
+								if(type3[j].Date.getDate() == a.getDate()){
 									flag = true;
 									type3[j].Count = type3[j].Count + 1;
 									if(type0[j].Count > maxCount){
@@ -115,7 +115,7 @@
 								}
 							}
 							if(!flag){
-								type3.push({"Count": "1", "Date": a.getDate()});
+								type3.push({"Count": "1", "Date": a});
 							}
 						}
 					},
