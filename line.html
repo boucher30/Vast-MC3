@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+    
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        .axis path {
+            fill: none;
+            stroke: #777;
+            shape-rendering: crispEdges;
+        }
+        .axis text {
+            font-family: Lato;
+            font-size: 13px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="jumbotron">
+
+            <svg id="visualisation" width="1000" height="500"></svg>
+            <script src="https://d3js.org/d3.v5.min.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
+			
+			<script>
+				try{
+				  var type0 = [];
+				  var type1 = [];
+				  var type2 = [];
+				  var type3 = [];
+	 
+				  function handleFileSelect(evt) {
+					console.log("Start");
+					var file = evt.target.files[0];
+					var minDate = new Date("01-01-2020");
+					var maxDate = new Date("01-01-2010");
+					var maxCount = 0;
+				 
+					Papa.parse(file, {
+					  dynamicTyping: true,
+					  step: function(row) {
+						var data = row.data;
+						var a = new Date(data[1]);
+						if(a < minDate){
+							minDate = a;
+						}
+						if(a > maxDate){
+							maxDate = a;
+						}
+						if(data[0] == 0){
+							var flag = false;
+							for(var j = 1; !flag && j < type0.length; j++){
+								if(type0[j].Date == a.getDate()){
+									flag = true;
+									type0[j].Count = type[j].Count + 1;
+									if(type0[j].Count > maxCount){
+										maxCount = type0[j].Count;
+									}
+									console.log("Type: 0, Date: " + type0[j].Date + " Count: " + type0[j].Count);
+								}
+							}
+							if(!flag){
+								type0.push({"Count": "1", "Date": a.getDate()});
+							}
+						}else if(data[0] == 1){
+							var flag = false;
+							for(var j = 1; !flag && j < type1.length; j++){
+								if(type1[j].Date == a.getDate()){
+									flag = true;
+									type1[j].Count = type1[j].Count + 1;
+									if(type0[j].Count > maxCount){
+										maxCount = type0[j].Count;
+									}
+									console.log("Type: 1, Date: " + type1[j].Date + " Count: " + type1[j].Count);
+								}
+							}
+							if(!flag){
+								type1.push({"Count": "1", "Date": a.getDate()});
+							}
+						}else if(data[0] == 2){
+							var flag = false;
+							for(var j = 1; !flag && j < type2.length; j++){
+								if(type2[j].Date == a.getDate()){
+									flag = true;
+									type2[j].Count = type2[j].Count + 1;
+									if(type0[j].Count > maxCount){
+										maxCount = type0[j].Count;
+									}
+									console.log("Type: 2, Date: " + type2[j].Date + " Count: " + type2[j].Count);
+								}
+							}
+							if(!flag){
+								type2.push({"Count": "1", "Date": a.getDate()});
+							}
+						}else if(data[0] == 3){
+							var flag = false;
+							for(var j = 1; !flag && j < type3.length; j++){
+								if(type3[j].Date == a.getDate()){
+									flag = true;
+									type3[j].Count = type3[j].Count + 1;
+									if(type0[j].Count > maxCount){
+										maxCount = type0[j].Count;
+									}
+									console.log("Type: 3, Date: " + type3[j].Date + " Count: " + type3[j].Count);
+								}
+							}
+							if(!flag){
+								type3.push({"Count": "1", "Date": a.getDate()});
+							}
+						}
+					},
+					  complete: function() {
+						console.log("All done!!!");
+						var vis = d3.select("#visualisation"),
+								WIDTH = 1000,
+								HEIGHT = 500,
+								MARGINS = {
+									top: 20,
+									right: 20,
+									bottom: 20,
+									left: 50
+								},
+								xScale = d3.scale.time().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+								yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, maxCount]),
+								xAxis = d3.svg.axis()
+								.scale(xScale),
+								yAxis = d3.svg.axis()
+								.scale(yScale)
+								.orient("left");
+							
+							vis.append("svg:g")
+								.attr("class", "x axis")
+								.attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+								.call(xAxis);
+							vis.append("svg:g")
+								.attr("class", "y axis")
+								.attr("transform", "translate(" + (MARGINS.left) + ",0)")
+								.call(yAxis);
+							var lineGen = d3.svg.line()
+								.x(function(d) {
+									return xScale(d.Date);
+								})
+								.y(function(d) {
+									return yScale(d.Count);
+								})
+								.interpolate("basis");
+							vis.append('svg:path')
+								.attr('d', lineGen(type0))
+								.attr('stroke', 'green')
+								.attr('stroke-width', 2)
+								.attr('fill', 'none');
+							vis.append('svg:path')
+								.attr('d', lineGen(type1))
+								.attr('stroke', 'blue')
+								.attr('stroke-width', 2)
+								.attr('fill', 'none');
+							vis.append('svg:path')
+								.attr('d', lineGen(type2))
+								.attr('stroke', 'red')
+								.attr('stroke-width', 2)
+								.attr('fill', 'none');
+							vis.append('svg:path')
+								.attr('d', lineGen(type3))
+								.attr('stroke', 'black')
+								.attr('stroke-width', 2)
+								.attr('fill', 'none');
+					  }
+					});
+				  }
+				 
+				  $(document).ready(function(){
+					$("#csv-file").change(handleFileSelect);
+				  });
+				  
+						
+					}catch(err){
+					
+					}
+			</script>
+			<input type="file" id="csv-file" name="files"/>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
