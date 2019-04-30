@@ -51,8 +51,8 @@
 
       node.append("text")
         .text(function(d) { return d.name })
-        .attr("x", "50%")
-        .attr("y", "50%")
+        .attr("x", function(d){return d.cx})
+        .attr("y", function(d){return d.cy})
         .attr("stroke","#51c5cf")
         .attr("dy", ".3rem")
         .attr("font-size", "25px")
