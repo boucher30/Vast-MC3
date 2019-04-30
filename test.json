@@ -1,0 +1,25 @@
+{
+     "name": "Group 1",
+     "children": [
+      {
+     "name": "Angelic",
+     "children": [
+      {"name": "AgglomerativeCluster", "value": 3938},
+      {"name": "CommunityStructure", "value": 3812},
+      {"name": "HierarchicalCluster", "value": 6714},
+      {"name": "MergeEdge", "value": 743}
+     ]
+    },
+{
+     "name": "Beth",
+     "children": [
+      {"name": "AgglomerativeCluster", "value": 3938},
+      {"name": "CommunityStructure", "value": 3812},
+      {"name": "HierarchicalCluster", "value": 6714},
+      {"name": "MergeEdge", "value": 743}
+     ]
+    },
+
+     ]
+    }
+
