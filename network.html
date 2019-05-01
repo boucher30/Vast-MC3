@@ -40,22 +40,24 @@
       // Initialize the nodes
       var node = svg
         .selectAll("circle")
-        .append('g').attr('class', 'circles')
         .data(data.nodes)
         .enter()
         .append('g')
-        .attr('class', 'circle')
-        .append("circle")
+        .attr('class', 'circle');
+
+        node.append("circle")
         .attr("r", 10)
         .style("fill", "#bd9cff")
         .attr("stroke" , "#000")
         .attr("stroke-width", '1px');
 
-      var names = svg.selectAll('g')
-        .data(data.nodes)
-        .enter()
-        .append('text')
-        .text(function(d) {return d.name;});
+        node.append('text')
+        .text(function(d) {return d.name;})
+        .attr('font-size', '25px')
+        .attr('color', 'red')
+
+
+
 
 
     
@@ -80,9 +82,7 @@
     
         node
              .attr("cx", function (d) { return d.x+6; })
-             .attr("cy", function(d) { return d.y-6; })
-             .append('text')
-             .text(function(d) {return d.name;});
+             .attr("cy", function(d) { return d.y-6; });
       }
     
     });
