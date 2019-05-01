@@ -17,6 +17,14 @@
             font-family: Lato;
             font-size: 13px;
         }
+		
+		ul{
+			margin: 10px;
+		}
+		
+		ul li{
+			display: inline;
+		}
     </style>
 
 </head>
@@ -24,6 +32,20 @@
 <body>
 
     <div class="container">
+	
+		<ul id="menu">
+			<li>
+				<select id='timescale' name='timescale' onchange="redrawGraph()">
+					<option value='Day'>Day</option>
+					<option value='Month'>Month</option>
+					<option value='Year'>Year</option>
+				</select>
+			</li>
+			<li><input type="checkbox" id="callCheck" onclick="redrawGraph()"> Emails</li>
+			<li><input type="checkbox" id="emailCheck" onclick="redrawGraph()"> Calls</li>
+			<li><input type="checkbox" id="meetingCheck" onclick="redrawGraph()"> Meetings</li>
+			<li><input type="checkbox" id="purchaseCheck" onclick="redrawGraph()"> Purchases</li>
+		</ul>  
 
         <div class="jumbotron">
 
@@ -33,15 +55,23 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
 			
 			<script>
+				var vis;
+				var minDate;
+				var maxDate;
+				var days = [[],[],[],[]];
+				  var months = [[],[],[],[]];
+				  var years = [[],[],[],[]];
+				  
+				  var dayMax = [0,0,0,0];
+				  var monthMax = [0,0,0,0];
+				  var yearMax = [0,0,0,0];
 				try{
-				  var days = [[][][][]];
-				  var months = [[][][][]];
-				  var years = [[][][][]];
+				  
 	 
 				  function handleFileSelect(evt) {
 					console.log("Start");
 					var file = evt.target.files[0];
-					var minDate = new Date(2020,1,1);
+					minDate = new Date(2020,1,1);
 					var maxDate = new Date(2010,1,1);
 					var maxCount = 0;
 				 
@@ -65,8 +95,8 @@
 								if(days[0][j].Date.getDate() == a.getDate() && days[0][j].Date.getYear() == a.getYear() && days[0][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									days[0][j].Count = days[0][j].Count + 1;
-									if(days[0][j].Count > maxCount){
-										maxCount = days[0][j].Count;
+									if(days[0][j].Count > dayMax[0]){
+										dayMax[0] = days[0][j].Count;
 										//console.log(maxCount);
 									}
 									//console.log("Type: 0, Date: " + days[0][j].Date + " Count: " + days[0][j].Count);
@@ -80,8 +110,8 @@
 								if(months[0][j].Date.getYear() == a.getYear() && months[0][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									months[0][j].Count = months[0][j].Count + 1;
-									if(months[0][j].Count > maxCount){
-										maxCount = months[0][j].Count;
+									if(months[0][j].Count > monthMax[0]){
+										monthMax[0] = months[0][j].Count;
 										//console.log(maxCount);
 									}
 									//console.log("Type: 0, Date: " + days[0][j].Date + " Count: " + days[0][j].Count);
@@ -94,8 +124,8 @@
 								if(years[0][j].Date.getYear() == a.getYear()){
 									flag = true;
 									years[0][j].Count = years[0][j].Count + 1;
-									if(years[0][j].Count > maxCount){
-										maxCount = years[0][j].Count;
+									if(years[0][j].Count > yearMax[0]){
+										yearMax[0] = years[0][j].Count;
 										//console.log(maxCount);
 									}
 									//console.log("Type: 0, Date: " + days[0][j].Date + " Count: " + days[0][j].Count);
@@ -111,8 +141,8 @@
 								if(days[1][j].Date.getDate() == a.getDate() && days[1][j].Date.getYear() == a.getYear() && days[1][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									days[1][j].Count = days[1][j].Count + 1;
-									if(days[1][j].Count > maxCount){
-										maxCount = days[1][j].Count;
+									if(days[1][j].Count > dayMax[1]){
+										dayMax[1] = days[1][j].Count;
 										//console.log(maxCount);
 									}
 									//console.log("Type: 1, Date: " + days[1][j].Date + " Count: " + days[1][j].Count);
@@ -126,8 +156,8 @@
 								if(months[1][j].Date.getYear() == a.getYear() && months[1][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									months[1][j].Count = months[1][j].Count + 1;
-									if(months[1][j].Count > maxCount){
-										maxCount = months[1][j].Count;
+									if(months[1][j].Count > monthMax[1]){
+										monthMax[1] = months[1][j].Count;
 										//console.log(maxCount);
 									}
 									//console.log("Type: 0, Date: " + days[0][j].Date + " Count: " + days[0][j].Count);
@@ -140,8 +170,8 @@
 								if(years[1][j].Date.getYear() == a.getYear()){
 									flag = true;
 									years[1][j].Count = years[1][j].Count + 1;
-									if(years[1][j].Count > maxCount){
-										maxCount = years[1][j].Count;
+									if(years[1][j].Count > yearMax[1]){
+										yearMax[1] = years[1][j].Count;
 										//console.log(maxCount);
 									}
 									//console.log("Type: 0, Date: " + days[0][j].Date + " Count: " + days[0][j].Count);
@@ -157,8 +187,8 @@
 								if(days[2][j].Date.getDate() == a.getDate() && days[2][j].Date.getYear() == a.getYear() && days[2][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									days[2][j].Count = days[2][j].Count + 1;
-									if(days[2][j].Count > maxCount){
-										maxCount = days[2][j].Count;
+									if(days[2][j].Count > dayMax[2]){
+										dayMax[2] = days[2][j].Count;
 										//console.log(maxCount);
 									}
 									//console.log("Type: 2, Date: " + days[2][j].Date + " Count: " + days[2][j].Count);
@@ -172,8 +202,8 @@
 								if(months[2][j].Date.getYear() == a.getYear() && months[2][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									months[2][j].Count = months[2][j].Count + 1;
-									if(months[2][j].Count > maxCount){
-										maxCount = months[2][j].Count;
+									if(months[2][j].Count > monthMax[2]){
+										monthMax[2] = months[2][j].Count;
 										//console.log(maxCount);
 									}
 									//console.log("Type: 0, Date: " + days[0][j].Date + " Count: " + days[0][j].Count);
@@ -186,8 +216,8 @@
 								if(years[2][j].Date.getYear() == a.getYear()){
 									flag = true;
 									years[2][j].Count = years[2][j].Count + 1;
-									if(years[2][j].Count > maxCount){
-										maxCount = years[2][j].Count;
+									if(years[2][j].Count > yearMax[2]){
+										yearMax[2] = years[2][j].Count;
 										//console.log(maxCount);
 									}
 									//console.log("Type: 0, Date: " + days[0][j].Date + " Count: " + days[0][j].Count);
@@ -203,8 +233,8 @@
 								if(days[3][j].Date.getDate() == a.getDate() && days[3][j].Date.getYear() == a.getYear() && days[3][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									days[3][j].Count = days[3][j].Count + 1;
-									if(days[3][j].Count > maxCount){
-										maxCount = days[3][j].Count;
+									if(days[3][j].Count > dayMax[3]){
+										dayMax[3] = days[3][j].Count;
 										//console.log(maxCount);
 									}
 									//console.log("Type: 3, Date: " + days[3][j].Date + " Count: " + days[3][j].Count);
@@ -218,8 +248,8 @@
 								if(months[3][j].Date.getYear() == a.getYear() && months[3][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									months[3][j].Count = months[3][j].Count + 1;
-									if(months[3][j].Count > maxCount){
-										maxCount = months[3][j].Count;
+									if(months[3][j].Count > monthMax[3]){
+										monthMax[3] = months[3][j].Count;
 										//console.log(maxCount);
 									}
 									//console.log("Type: 0, Date: " + days[0][j].Date + " Count: " + days[0][j].Count);
@@ -232,8 +262,8 @@
 								if(years[3][j].Date.getYear() == a.getYear()){
 									flag = true;
 									years[3][j].Count = years[3][j].Count + 1;
-									if(years[3][j].Count > maxCount){
-										maxCount = years[3][j].Count;
+									if(years[3][j].Count > yearMax[3]){
+										yearMax[3] = years[3][j].Count;
 										//console.log(maxCount);
 									}
 									//console.log("Type: 0, Date: " + days[0][j].Date + " Count: " + days[0][j].Count);
@@ -246,7 +276,7 @@
 					},
 					  complete: function() {
 						console.log("All done!!!");
-						var vis = d3.select("#visualisation"),
+						vis = d3.select("#visualisation"),
 								WIDTH = 1000,
 								HEIGHT = 500,
 								MARGINS = {
@@ -256,7 +286,7 @@
 									left: 50
 								},
 								xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
-								yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, maxCount]),
+								yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, dayMax[1]]),
 								xAxis = d3.axisBottom(xScale),
 								yAxis = d3.axisLeft(yScale);
 							
@@ -307,6 +337,180 @@
 					}catch(err){
 					
 					}
+					
+				function redrawGraph() {
+				  console.log("Restart");
+				  var drop = document.getElementById("timescale");
+				  var value =  drop.options[drop.selectedIndex].value;
+				  var hasCall = document.getElementById("callCheck").checked;
+				  var hasEmail = document.getElementById("emailCheck").checked;
+				  var hasMeeting = document.getElementById("meetingCheck").checked;
+				  var hasPurchase = document.getElementById("purchaseCheck").checked;
+				  var max = 0;
+				  switch(value){
+					case "Day": 
+						if(hasCall && dayMax[0] > max){
+							max = dayMax[0];
+						}
+						if(hasEmail && dayMax[1] > max){
+							max = dayMax[1];
+						}
+						if(hasMeeting && dayMax[2] > max){
+							max = dayMax[2];
+						}
+						if(hasPurchase && dayMax[3] > max){
+							max = dayMax[3];
+						}
+						break;
+					case "Month":
+						if(hasCall && monthMax[0] > max){
+							max = monthMax[0];
+						}
+						if(hasEmail && monthMax[1] > max){
+							max = monthMax[1];
+						}
+						if(hasMeeting && monthMax[2] > max){
+							max = monthMax[2];
+						}
+						if(hasPurchase && monthMax[3] > max){
+							max = monthMax[3];
+						}
+						break;
+					case "Year":
+						if(hasCall && yearMax[0] > max){
+							max = yearMax[0];
+						}
+						if(hasEmail && yearMax[1] > max){
+							max = yearMax[1];
+						}
+						if(hasMeeting && yearMax[2] > max){
+							max = yearMax[2];
+						}
+						if(hasPurchase && yearMax[3] > max){
+							max = yearMax[3];
+						}
+				  }
+				  vis = d3.select("#visualisation"),
+								WIDTH = 1000,
+								HEIGHT = 500,
+								MARGINS = {
+									top: 20,
+									right: 20,
+									bottom: 20,
+									left: 50
+								},
+								xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+								yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, max]),
+								xAxis = d3.axisBottom(xScale),
+								yAxis = d3.axisLeft(yScale);
+							
+							vis.append("svg:g")
+								.attr("class", "x axis")
+								.attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+								.call(xAxis);
+							vis.append("svg:g")
+								.attr("class", "y axis")
+								.attr("transform", "translate(" + (MARGINS.left) + ",0)")
+								.call(yAxis);
+							var lineGen = d3.line()
+								.x(function(d) {
+									return xScale(d.Date);
+								})
+								.y(function(d) {
+									return yScale(d.Count);
+								});
+							switch(value){
+								case "Day":
+									if(hasCall){
+										vis.append('svg:path')
+											.attr('d', lineGen(days[0]))
+											.attr('stroke', 'green')
+											.attr('stroke-width', 2)
+											.attr('fill', 'none');
+									}
+									if(hasEmail){		
+										vis.append('svg:path')
+											.attr('d', lineGen(days[1]))
+											.attr('stroke', 'blue')
+											.attr('stroke-width', 2)
+											.attr('fill', 'none');
+									}
+									if(hasMeeting){
+										vis.append('svg:path')
+											.attr('d', lineGen(days[2]))
+											.attr('stroke', 'red')
+											.attr('stroke-width', 2)
+											.attr('fill', 'none');
+									}
+									if(hasPurchase){							
+										vis.append('svg:path')
+											.attr('d', lineGen(days[3]))
+											.attr('stroke', 'black')
+											.attr('stroke-width', 2)
+											.attr('fill', 'none');
+									}
+									break;
+								case "Month":
+									if(hasCall){
+										vis.append('svg:path')
+											.attr('d', lineGen(months[0]))
+											.attr('stroke', 'green')
+											.attr('stroke-width', 2)
+											.attr('fill', 'none');
+									}
+									if(hasEmail){		
+										vis.append('svg:path')
+											.attr('d', lineGen(months[1]))
+											.attr('stroke', 'blue')
+											.attr('stroke-width', 2)
+											.attr('fill', 'none');
+									}
+									if(hasMeeting){		
+										vis.append('svg:path')
+											.attr('d', lineGen(months[2]))
+											.attr('stroke', 'red')
+											.attr('stroke-width', 2)
+											.attr('fill', 'none');
+									}
+									if(hasPurchase){		
+										vis.append('svg:path')
+											.attr('d', lineGen(months[3]))
+											.attr('stroke', 'black')
+											.attr('stroke-width', 2)
+											.attr('fill', 'none');
+									}
+									break;
+								case "Year":
+									if(hasCall){
+										vis.append('svg:path')
+											.attr('d', lineGen(years[0]))
+											.attr('stroke', 'green')
+											.attr('stroke-width', 2)
+											.attr('fill', 'none');
+									}
+									if(hasEmail){		
+										vis.append('svg:path')
+											.attr('d', lineGen(years[1]))
+											.attr('stroke', 'blue')
+											.attr('stroke-width', 2)
+											.attr('fill', 'none');
+									}
+									if(hasMeeting){		
+										vis.append('svg:path')
+											.attr('d', lineGen(years[2]))
+											.attr('stroke', 'red')
+											.attr('stroke-width', 2)
+											.attr('fill', 'none');
+									}
+									if(hasPurchase){		
+										vis.append('svg:path')
+											.attr('d', lineGen(years[3]))
+											.attr('stroke', 'black')
+											.attr('stroke-width', 2)
+											.attr('fill', 'none');
+									}
+							}
+				}
 			</script>
 			<input type="file" id="csv-file" name="files"/>
         </div>
