@@ -65,6 +65,10 @@
 				  var dayMax = [0,0,0,0];
 				  var monthMax = [0,0,0,0];
 				  var yearMax = [0,0,0,0];
+				  document.getElementById("callCheck").checked = true;
+				  document.getElementById("emailCheck").checked = true;
+				  document.getElementById("meetingCheck").checked = true;
+				  document.getElementById("purchaseCheck").checked = true;
 				try{
 				  
 	 
@@ -390,6 +394,7 @@
 							max = yearMax[3];
 						}
 				  }
+				  d3.select("svg").remove();
 				  vis = d3.select("#visualisation"),
 								WIDTH = 1000,
 								HEIGHT = 500,
@@ -511,6 +516,7 @@
 									}
 							}
 				}
+				console.log("Finished");
 			</script>
 			<input type="file" id="csv-file" name="files"/>
         </div>
