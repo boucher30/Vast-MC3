@@ -38,16 +38,26 @@
         .append("line")
           .style("stroke", "#aaa");
     
+
+
+
+      var elem = svg.selectAll('g').data(data.nodes);
+
       // Initialize the nodes
-      var group = svg
-        .selectAll("circle")
-        .data(data.nodes)
-        .enter()
+      var group = elem.enter()
         .append('g')
         .attr('class', 'circle');
 
 
-       var names =  group.append('text')
+      var node =  group.append("circle")
+        .attr("r", 20)
+        .style("fill", "#bd9cff")
+        .attr("stroke" , "#000")
+        .attr("stroke-width", '1px')
+        .style("z-index", '-1');
+
+
+       var names = group.append('text')
         .text(function(d) {return d.name;})
         .attr('font-size', '15px')
         .attr('color', 'red')
@@ -55,12 +65,7 @@
         .attr('text-anchor', 'middle')
         .style("z-index", '1');
 
-       var node =  group.append("circle")
-        .attr("r", 20)
-        .style("fill", "#bd9cff")
-        .attr("stroke" , "#000")
-        .attr("stroke-width", '1px')
-        .style("z-index", '-1');
+
 
 
 
