@@ -15,8 +15,8 @@
 
     // set the dimensions and margins of the graph
     var margin = {top: 10, right: 30, bottom: 30, left: 40},
-      width = 1000 - margin.left - margin.right,
-      height = 1000 - margin.top - margin.bottom;
+      width = 800 - margin.left - margin.right,
+      height = 800 - margin.top - margin.bottom;
     
     // append the svg object to the body of the page
     var svg = d3.select("#network")
@@ -28,6 +28,7 @@
             "translate(" + margin.left + "," + margin.top + ")");
     
     d3.json("./links.json", function(data) {
+      
     
       // Initialize the links
       var link = svg
@@ -38,23 +39,30 @@
           .style("stroke", "#aaa");
     
       // Initialize the nodes
-      var node = svg
+      var group = svg
         .selectAll("circle")
         .data(data.nodes)
         .enter()
         .append('g')
         .attr('class', 'circle');
 
-        node.append("circle")
-        .attr("r", 10)
+
+       var names =  group.append('text')
+        .text(function(d) {return d.name;})
+        .attr('font-size', '15px')
+        .attr('color', 'red')
+        .attr('font-family', 'arial')
+        .attr('text-anchor', 'middle')
+        .style("z-index", '1');
+
+       var node =  group.append("circle")
+        .attr("r", 20)
         .style("fill", "#bd9cff")
         .attr("stroke" , "#000")
-        .attr("stroke-width", '1px');
+        .attr("stroke-width", '1px')
+        .style("z-index", '-1');
 
-        node.append('text')
-        .text(function(d) {return d.name;})
-        .attr('font-size', '25px')
-        .attr('color', 'red')
+
 
 
 
@@ -67,7 +75,7 @@
                 .id(function(d) { return d.id; })                     // This provide  the id of a node
                 .links(data.links)                                    // and this the list of links
           )
-          .force("charge", d3.forceManyBody().strength(-400))         // This adds repulsion between nodes. Play with the -400 for the repulsion strength
+          .force("charge", d3.forceManyBody().strength(-1100))         // This adds repulsion between nodes. Play with the -400 for the repulsion strength
           .force("center", d3.forceCenter(width / 2, height / 2))     // This force attracts nodes to the center of the svg area
           .on("end", ticked);
     
@@ -79,10 +87,18 @@
             .attr("x2", function(d) { return d.target.x; })
             .attr("y2", function(d) { return d.target.y; })
             .attr("stroke-width", function(d){ return d.weight; })
+
+
     
         node
              .attr("cx", function (d) { return d.x+6; })
              .attr("cy", function(d) { return d.y-6; });
+
+        names
+            .attr("x", function (d) { return d.x+6; })
+            .attr("y", function(d) { return d.y-6; });
+
+
       }
     
     });
