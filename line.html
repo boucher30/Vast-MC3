@@ -22,6 +22,7 @@
             margin: 10px;
             border: 10px;
             padding: 10px;
+            overflow: visible;
         }
     </style>
 
@@ -118,6 +119,7 @@
 							if(!flag){
 								months[0].push({"Count": 1, "Date": a});
 							}
+                            var flag = false;
 							for(var j = 0; !flag && j < years[0].length; j++){
 								if(years[0][j].Date.getYear() == a.getYear()){
 									flag = true;
@@ -164,6 +166,7 @@
 							if(!flag){
 								months[1].push({"Count": 1, "Date": a});
 							}
+                            var flag = false;
 							for(var j = 0; !flag && j < years[1].length; j++){
 								if(years[1][j].Date.getYear() == a.getYear()){
 									flag = true;
@@ -210,6 +213,7 @@
 							if(!flag){
 								months[2].push({"Count": 1, "Date": a});
 							}
+                            var flag = false;
 							for(var j = 0; !flag && j < years[2].length; j++){
 								if(years[2][j].Date.getYear() == a.getYear()){
 									flag = true;
@@ -256,6 +260,7 @@
 							if(!flag){
 								months[3].push({"Count": 1, "Date": a});
 							}
+                            var flag = false;
 							for(var j = 0; !flag && j < years[3].length; j++){
 								if(years[3][j].Date.getYear() == a.getYear()){
 									flag = true;
