@@ -17,14 +17,12 @@
             font-family: Lato;
             font-size: 13px;
         }
-		
-		ul{
-			margin: 10px;
-		}
-		
-		ul li{
-			display: inline;
-		}
+
+        svg{
+            margin: 10px;
+            border: 10px;
+            padding: 10px;
+        }
     </style>
 
 </head>
@@ -32,30 +30,30 @@
 <body>
 
     <div class="container">
-	
-		<ul id="menu">
-			<li>
-				<select id='timescale' name='timescale' onchange="redrawGraph()">
-					<option value='Day'>Day</option>
-					<option value='Month'>Month</option>
-					<option value='Year'>Year</option>
-				</select>
-			</li>
-			<li><input type="checkbox" id="callCheck" onclick="redrawGraph()"> Emails</li>
-			<li><input type="checkbox" id="emailCheck" onclick="redrawGraph()"> Calls</li>
-			<li><input type="checkbox" id="meetingCheck" onclick="redrawGraph()"> Meetings</li>
-			<li><input type="checkbox" id="purchaseCheck" onclick="redrawGraph()"> Purchases</li>
-		</ul>  
 
         <div class="jumbotron">
+            <input type="file" id="csv-file" name="files"/>
 
-            <svg id="visualisation" width="1200" height="600"></svg>
+            <svg id="days_all" width="1200" height="600"></svg>
+            <svg id="days_call" width="1200" height="600"></svg>
+            <svg id="days_email" width="1200" height="600"></svg>
+            <svg id="days_purchase" width="1200" height="600"></svg>
+            <svg id="days_meeting" width="1200" height="600"></svg>
+            <svg id="months_all" width="1200" height="600"></svg>
+            <svg id="months_call" width="1200" height="600"></svg>
+            <svg id="months_email" width="1200" height="600"></svg>
+            <svg id="months_purchase" width="1200" height="600"></svg>
+            <svg id="months_meeting" width="1200" height="600"></svg>
+            <svg id="years_all" width="1200" height="600"></svg>
+            <svg id="years_call" width="1200" height="600"></svg>
+            <svg id="years_email" width="1200" height="600"></svg>
+            <svg id="years_purchase" width="1200" height="600"></svg>
+            <svg id="years_meeting" width="1200" height="600"></svg>
             <script src="https://d3js.org/d3.v5.min.js"></script>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
 			
 			<script>
-				var vis;
 				var minDate;
 				var maxDate;
 				var days = [[],[],[],[]];
@@ -65,10 +63,6 @@
 				  var dayMax = [0,0,0,0];
 				  var monthMax = [0,0,0,0];
 				  var yearMax = [0,0,0,0];
-				  document.getElementById("callCheck").checked = true;
-				  document.getElementById("emailCheck").checked = true;
-				  document.getElementById("meetingCheck").checked = true;
-				  document.getElementById("purchaseCheck").checked = true;
 				try{
 				  
 	 
@@ -95,7 +89,7 @@
 						if(data[0][0] == 0){
 							//console.log("0");
 							var flag = false;
-							for(var j = 1; !flag && j < days[0].length; j++){
+							for(var j = 0; !flag && j < days[0].length; j++){
 								if(days[0][j].Date.getDate() == a.getDate() && days[0][j].Date.getYear() == a.getYear() && days[0][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									days[0][j].Count = days[0][j].Count + 1;
@@ -110,7 +104,7 @@
 								days[0].push({"Count": 1, "Date": a});
 							}
 							var flag = false;
-							for(var j = 1; !flag && j < months[0].length; j++){
+							for(var j = 0; !flag && j < months[0].length; j++){
 								if(months[0][j].Date.getYear() == a.getYear() && months[0][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									months[0][j].Count = months[0][j].Count + 1;
@@ -124,7 +118,7 @@
 							if(!flag){
 								months[0].push({"Count": 1, "Date": a});
 							}
-							for(var j = 1; !flag && j < years[0].length; j++){
+							for(var j = 0; !flag && j < years[0].length; j++){
 								if(years[0][j].Date.getYear() == a.getYear()){
 									flag = true;
 									years[0][j].Count = years[0][j].Count + 1;
@@ -141,7 +135,7 @@
 						}else if(data[0][0] == 1){
 							//console.log("1");
 							var flag = false;
-							for(var j = 1; !flag && j < days[1].length; j++){
+							for(var j = 0; !flag && j < days[1].length; j++){
 								if(days[1][j].Date.getDate() == a.getDate() && days[1][j].Date.getYear() == a.getYear() && days[1][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									days[1][j].Count = days[1][j].Count + 1;
@@ -156,7 +150,7 @@
 								days[1].push({"Count": 1, "Date": a});
 							}
 							var flag = false;
-							for(var j = 1; !flag && j < months[1].length; j++){
+							for(var j = 0; !flag && j < months[1].length; j++){
 								if(months[1][j].Date.getYear() == a.getYear() && months[1][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									months[1][j].Count = months[1][j].Count + 1;
@@ -170,7 +164,7 @@
 							if(!flag){
 								months[1].push({"Count": 1, "Date": a});
 							}
-							for(var j = 1; !flag && j < years[1].length; j++){
+							for(var j = 0; !flag && j < years[1].length; j++){
 								if(years[1][j].Date.getYear() == a.getYear()){
 									flag = true;
 									years[1][j].Count = years[1][j].Count + 1;
@@ -187,7 +181,7 @@
 						}else if(data[0][0] == 2){
 							//consle.log("2");
 							var flag = false;
-							for(var j = 1; !flag && j < days[2].length; j++){
+							for(var j = 0; !flag && j < days[2].length; j++){
 								if(days[2][j].Date.getDate() == a.getDate() && days[2][j].Date.getYear() == a.getYear() && days[2][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									days[2][j].Count = days[2][j].Count + 1;
@@ -202,7 +196,7 @@
 								days[2].push({"Count": 1, "Date": a});
 							}
 							var flag = false;
-							for(var j = 1; !flag && j < months[2].length; j++){
+							for(var j = 0; !flag && j < months[2].length; j++){
 								if(months[2][j].Date.getYear() == a.getYear() && months[2][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									months[2][j].Count = months[2][j].Count + 1;
@@ -216,7 +210,7 @@
 							if(!flag){
 								months[2].push({"Count": 1, "Date": a});
 							}
-							for(var j = 1; !flag && j < years[2].length; j++){
+							for(var j = 0; !flag && j < years[2].length; j++){
 								if(years[2][j].Date.getYear() == a.getYear()){
 									flag = true;
 									years[2][j].Count = years[2][j].Count + 1;
@@ -233,7 +227,7 @@
 						}else if(data[0][0] == 3){
 							console.log("3");
 							var flag = false;
-							for(var j = 1; !flag && j < days[3].length; j++){
+							for(var j = 0; !flag && j < days[3].length; j++){
 								if(days[3][j].Date.getDate() == a.getDate() && days[3][j].Date.getYear() == a.getYear() && days[3][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									days[3][j].Count = days[3][j].Count + 1;
@@ -248,7 +242,7 @@
 								days[3].push({"Count": 1, "Date": a});
 							}
 							var flag = false;
-							for(var j = 1; !flag && j < months[3].length; j++){
+							for(var j = 0; !flag && j < months[3].length; j++){
 								if(months[3][j].Date.getYear() == a.getYear() && months[3][j].Date.getMonth() == a.getMonth()){
 									flag = true;
 									months[3][j].Count = months[3][j].Count + 1;
@@ -262,7 +256,7 @@
 							if(!flag){
 								months[3].push({"Count": 1, "Date": a});
 							}
-							for(var j = 1; !flag && j < years[3].length; j++){
+							for(var j = 0; !flag && j < years[3].length; j++){
 								if(years[3][j].Date.getYear() == a.getYear()){
 									flag = true;
 									years[3][j].Count = years[3][j].Count + 1;
@@ -280,11 +274,11 @@
 					},
 					  complete: function() {
 						console.log("All done!!!");
-						vis = d3.select("#visualisation"),
+						var vis = d3.select("#days_all"),
 								WIDTH = 1000,
 								HEIGHT = 500,
 								MARGINS = {
-									top: 20,
+									top: 30,
 									right: 20,
 									bottom: 20,
 									left: 50
@@ -293,6 +287,15 @@
 								yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, dayMax[1]]),
 								xAxis = d3.axisBottom(xScale),
 								yAxis = d3.axisLeft(yScale);
+
+                          vis.append("text")
+                              .attr("x", (WIDTH / 2))
+                              .attr("y", 0 - (MARGINS.top / 2))
+                              .attr("text-anchor", "middle")
+                              .style("font-size", "16px")
+.style("color", "black")
+                              .style("text-decoration", "underline")
+                              .text("Activities per Day");
 							
 							vis.append("svg:g")
 								.attr("class", "x axis")
@@ -329,6 +332,665 @@
 								.attr('stroke', 'black')
 								.attr('stroke-width', 2)
 								.attr('fill', 'none');
+
+                          var vis = d3.select("#days_call"),
+                              WIDTH = 1000,
+                              HEIGHT = 500,
+                              MARGINS = {
+                                  top: 30,
+                                  right: 20,
+                                  bottom: 20,
+                                  left: 50
+                              },
+                              xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+                              yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, dayMax[0]]),
+                              xAxis = d3.axisBottom(xScale),
+                              yAxis = d3.axisLeft(yScale);
+
+                          vis.append("text")
+                              .attr("x", (WIDTH / 2))
+                              .attr("y", 0 - (MARGINS.top / 2))
+                              .attr("text-anchor", "middle")
+                              .style("font-size", "16px")
+.style("color", "black")
+                              .style("text-decoration", "underline")
+                              .text("Calls per Day");
+
+                          vis.append("svg:g")
+                              .attr("class", "x axis")
+                              .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                              .call(xAxis);
+                          vis.append("svg:g")
+                              .attr("class", "y axis")
+                              .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                              .call(yAxis);
+                          var lineGen = d3.line()
+                              .x(function(d) {
+                                  return xScale(d.Date);
+                              })
+                              .y(function(d) {
+                                  return yScale(d.Count);
+                              });
+                          vis.append('svg:path')
+                              .attr('d', lineGen(days[0]))
+                              .attr('stroke', 'green')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+
+
+                          var vis = d3.select("#days_email"),
+                              WIDTH = 1000,
+                              HEIGHT = 500,
+                              MARGINS = {
+                                  top: 30,
+                                  right: 20,
+                                  bottom: 20,
+                                  left: 50
+                              },
+                              xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+                              yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, dayMax[1]]),
+                              xAxis = d3.axisBottom(xScale),
+                              yAxis = d3.axisLeft(yScale);
+
+                          vis.append("text")
+                              .attr("x", (WIDTH / 2))
+                              .attr("y", 0 - (MARGINS.top / 2))
+                              .attr("text-anchor", "middle")
+                              .style("font-size", "16px")
+.style("color", "black")
+                              .style("text-decoration", "underline")
+                              .text("Emails per Day");
+
+                          vis.append("svg:g")
+                              .attr("class", "x axis")
+                              .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                              .call(xAxis);
+                          vis.append("svg:g")
+                              .attr("class", "y axis")
+                              .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                              .call(yAxis);
+                          var lineGen = d3.line()
+                              .x(function(d) {
+                                  return xScale(d.Date);
+                              })
+                              .y(function(d) {
+                                  return yScale(d.Count);
+                              });
+                          vis.append('svg:path')
+                              .attr('d', lineGen(days[1]))
+                              .attr('stroke', 'blue')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+
+
+                          var vis = d3.select("#days_purchase"),
+                              WIDTH = 1000,
+                              HEIGHT = 500,
+                              MARGINS = {
+                                  top: 30,
+                                  right: 20,
+                                  bottom: 20,
+                                  left: 50
+                              },
+                              xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+                              yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, dayMax[2]]),
+                              xAxis = d3.axisBottom(xScale),
+                              yAxis = d3.axisLeft(yScale);
+
+                          vis.append("text")
+                              .attr("x", (WIDTH / 2))
+                              .attr("y", 0 - (MARGINS.top / 2))
+                              .attr("text-anchor", "middle")
+                              .style("font-size", "16px")
+.style("color", "black")
+                              .style("text-decoration", "underline")
+                              .text("Purchases per Day");
+
+                          vis.append("svg:g")
+                              .attr("class", "x axis")
+                              .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                              .call(xAxis);
+                          vis.append("svg:g")
+                              .attr("class", "y axis")
+                              .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                              .call(yAxis);
+                          var lineGen = d3.line()
+                              .x(function(d) {
+                                  return xScale(d.Date);
+                              })
+                              .y(function(d) {
+                                  return yScale(d.Count);
+                              });
+                          vis.append('svg:path')
+                              .attr('d', lineGen(days[2]))
+                              .attr('stroke', 'red')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+
+
+                          var vis = d3.select("#days_meeting"),
+                              WIDTH = 1000,
+                              HEIGHT = 500,
+                              MARGINS = {
+                                  top: 30,
+                                  right: 20,
+                                  bottom: 20,
+                                  left: 50
+                              },
+                              xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+                              yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, dayMax[3]]),
+                              xAxis = d3.axisBottom(xScale),
+                              yAxis = d3.axisLeft(yScale);
+
+                          vis.append("text")
+                              .attr("x", (WIDTH / 2))
+                              .attr("y", 0 - (MARGINS.top / 2))
+                              .attr("text-anchor", "middle")
+                              .style("font-size", "16px")
+.style("color", "black")
+                              .style("text-decoration", "underline")
+                              .text("Meetings per Day");
+
+                          vis.append("svg:g")
+                              .attr("class", "x axis")
+                              .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                              .call(xAxis);
+                          vis.append("svg:g")
+                              .attr("class", "y axis")
+                              .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                              .call(yAxis);
+                          var lineGen = d3.line()
+                              .x(function(d) {
+                                  return xScale(d.Date);
+                              })
+                              .y(function(d) {
+                                  return yScale(d.Count);
+                              });
+                          vis.append('svg:path')
+                              .attr('d', lineGen(days[3]))
+                              .attr('stroke', 'black')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+
+
+                          var vis = d3.select("#months_all"),
+                              WIDTH = 1000,
+                              HEIGHT = 500,
+                              MARGINS = {
+                                  top: 30,
+                                  right: 20,
+                                  bottom: 20,
+                                  left: 50
+                              },
+                              xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+                              yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, monthMax[1]]),
+                              xAxis = d3.axisBottom(xScale),
+                              yAxis = d3.axisLeft(yScale);
+
+                          vis.append("text")
+                              .attr("x", (WIDTH / 2))
+                              .attr("y", 0 - (MARGINS.top / 2))
+                              .attr("text-anchor", "middle")
+                              .style("font-size", "16px")
+.style("color", "black")
+                              .style("text-decoration", "underline")
+                              .text("Activities per Month");
+
+                          vis.append("svg:g")
+                              .attr("class", "x axis")
+                              .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                              .call(xAxis);
+                          vis.append("svg:g")
+                              .attr("class", "y axis")
+                              .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                              .call(yAxis);
+                          var lineGen = d3.line()
+                              .x(function(d) {
+                                  return xScale(d.Date);
+                              })
+                              .y(function(d) {
+                                  return yScale(d.Count);
+                              });
+                          vis.append('svg:path')
+                              .attr('d', lineGen(months[0]))
+                              .attr('stroke', 'green')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+                          vis.append('svg:path')
+                              .attr('d', lineGen(months[1]))
+                              .attr('stroke', 'blue')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+                          vis.append('svg:path')
+                              .attr('d', lineGen(months[2]))
+                              .attr('stroke', 'red')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+                          vis.append('svg:path')
+                              .attr('d', lineGen(months[3]))
+                              .attr('stroke', 'black')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+
+
+                          var vis = d3.select("#months_call"),
+                              WIDTH = 1000,
+                              HEIGHT = 500,
+                              MARGINS = {
+                                  top: 30,
+                                  right: 20,
+                                  bottom: 20,
+                                  left: 50
+                              },
+                              xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+                              yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, monthMax[0]]),
+                              xAxis = d3.axisBottom(xScale),
+                              yAxis = d3.axisLeft(yScale);
+
+                          vis.append("text")
+                              .attr("x", (WIDTH / 2))
+                              .attr("y", 0 - (MARGINS.top / 2))
+                              .attr("text-anchor", "middle")
+                              .style("font-size", "16px")
+.style("color", "black")
+                              .style("text-decoration", "underline")
+                              .text("Calls per Month");
+
+                          vis.append("svg:g")
+                              .attr("class", "x axis")
+                              .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                              .call(xAxis);
+                          vis.append("svg:g")
+                              .attr("class", "y axis")
+                              .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                              .call(yAxis);
+                          var lineGen = d3.line()
+                              .x(function(d) {
+                                  return xScale(d.Date);
+                              })
+                              .y(function(d) {
+                                  return yScale(d.Count);
+                              });
+                          vis.append('svg:path')
+                              .attr('d', lineGen(months[0]))
+                              .attr('stroke', 'green')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+
+
+                          var vis = d3.select("#months_email"),
+                              WIDTH = 1000,
+                              HEIGHT = 500,
+                              MARGINS = {
+                                  top: 30,
+                                  right: 20,
+                                  bottom: 20,
+                                  left: 50
+                              },
+                              xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+                              yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, monthMax[1]]),
+                              xAxis = d3.axisBottom(xScale),
+                              yAxis = d3.axisLeft(yScale);
+
+                          vis.append("text")
+                              .attr("x", (WIDTH / 2))
+                              .attr("y", 0 - (MARGINS.top / 2))
+                              .attr("text-anchor", "middle")
+                              .style("font-size", "16px")
+.style("color", "black")
+                              .style("text-decoration", "underline")
+                              .text("Emails per Month");
+
+                          vis.append("svg:g")
+                              .attr("class", "x axis")
+                              .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                              .call(xAxis);
+                          vis.append("svg:g")
+                              .attr("class", "y axis")
+                              .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                              .call(yAxis);
+                          var lineGen = d3.line()
+                              .x(function(d) {
+                                  return xScale(d.Date);
+                              })
+                              .y(function(d) {
+                                  return yScale(d.Count);
+                              });
+                          vis.append('svg:path')
+                              .attr('d', lineGen(months[1]))
+                              .attr('stroke', 'blue')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+
+
+                          var vis = d3.select("#months_purchase"),
+                              WIDTH = 1000,
+                              HEIGHT = 500,
+                              MARGINS = {
+                                  top: 30,
+                                  right: 20,
+                                  bottom: 20,
+                                  left: 50
+                              },
+                              xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+                              yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, monthMax[2]]),
+                              xAxis = d3.axisBottom(xScale),
+                              yAxis = d3.axisLeft(yScale);
+
+                          vis.append("text")
+                              .attr("x", (WIDTH / 2))
+                              .attr("y", 0 - (MARGINS.top / 2))
+                              .attr("text-anchor", "middle")
+                              .style("font-size", "16px")
+.style("color", "black")
+                              .style("text-decoration", "underline")
+                              .text("Purchases per Month");
+
+                          vis.append("svg:g")
+                              .attr("class", "x axis")
+                              .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                              .call(xAxis);
+                          vis.append("svg:g")
+                              .attr("class", "y axis")
+                              .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                              .call(yAxis);
+                          var lineGen = d3.line()
+                              .x(function(d) {
+                                  return xScale(d.Date);
+                              })
+                              .y(function(d) {
+                                  return yScale(d.Count);
+                              });
+                          vis.append('svg:path')
+                              .attr('d', lineGen(months[2]))
+                              .attr('stroke', 'red')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+
+
+                          var vis = d3.select("#months_meeting"),
+                              WIDTH = 1000,
+                              HEIGHT = 500,
+                              MARGINS = {
+                                  top: 30,
+                                  right: 20,
+                                  bottom: 20,
+                                  left: 50
+                              },
+                              xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+                              yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, monthMax[3]]),
+                              xAxis = d3.axisBottom(xScale),
+                              yAxis = d3.axisLeft(yScale);
+
+                          vis.append("text")
+                              .attr("x", (WIDTH / 2))
+                              .attr("y", 0 - (MARGINS.top / 2))
+                              .attr("text-anchor", "middle")
+                              .style("font-size", "16px")
+.style("color", "black")
+                              .style("text-decoration", "underline")
+                              .text("Meetings per Month");
+
+                          vis.append("svg:g")
+                              .attr("class", "x axis")
+                              .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                              .call(xAxis);
+                          vis.append("svg:g")
+                              .attr("class", "y axis")
+                              .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                              .call(yAxis);
+                          var lineGen = d3.line()
+                              .x(function(d) {
+                                  return xScale(d.Date);
+                              })
+                              .y(function(d) {
+                                  return yScale(d.Count);
+                              });
+                          vis.append('svg:path')
+                              .attr('d', lineGen(months[3]))
+                              .attr('stroke', 'black')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+
+
+                          var vis = d3.select("#years_all"),
+                              WIDTH = 1000,
+                              HEIGHT = 500,
+                              MARGINS = {
+                                  top: 30,
+                                  right: 20,
+                                  bottom: 20,
+                                  left: 50
+                              },
+                              xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+                              yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, yearMax[1]]),
+                              xAxis = d3.axisBottom(xScale),
+                              yAxis = d3.axisLeft(yScale);
+
+                          vis.append("text")
+                              .attr("x", (WIDTH / 2))
+                              .attr("y", 0 - (MARGINS.top / 2))
+                              .attr("text-anchor", "middle")
+                              .style("font-size", "16px")
+.style("color", "black")
+                              .style("text-decoration", "underline")
+                              .text("Activities per Year");
+
+                          vis.append("svg:g")
+                              .attr("class", "x axis")
+                              .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                              .call(xAxis);
+                          vis.append("svg:g")
+                              .attr("class", "y axis")
+                              .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                              .call(yAxis);
+                          var lineGen = d3.line()
+                              .x(function(d) {
+                                  return xScale(d.Date);
+                              })
+                              .y(function(d) {
+                                  return yScale(d.Count);
+                              });
+                          vis.append('svg:path')
+                              .attr('d', lineGen(years[0]))
+                              .attr('stroke', 'green')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+                          vis.append('svg:path')
+                              .attr('d', lineGen(years[1]))
+                              .attr('stroke', 'blue')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+                          vis.append('svg:path')
+                              .attr('d', lineGen(years[2]))
+                              .attr('stroke', 'red')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+                          vis.append('svg:path')
+                              .attr('d', lineGen(years[3]))
+                              .attr('stroke', 'black')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+
+
+                          var vis = d3.select("#years_call"),
+                              WIDTH = 1000,
+                              HEIGHT = 500,
+                              MARGINS = {
+                                  top: 30,
+                                  right: 20,
+                                  bottom: 20,
+                                  left: 50
+                              },
+                              xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+                              yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, yearMax[0]]),
+                              xAxis = d3.axisBottom(xScale),
+                              yAxis = d3.axisLeft(yScale);
+
+                          vis.append("text")
+                              .attr("x", (WIDTH / 2))
+                              .attr("y", 0 - (MARGINS.top / 2))
+                              .attr("text-anchor", "middle")
+                              .style("font-size", "16px")
+.style("color", "black")
+                              .style("text-decoration", "underline")
+                              .text("Calls per Year");
+
+                          vis.append("svg:g")
+                              .attr("class", "x axis")
+                              .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                              .call(xAxis);
+                          vis.append("svg:g")
+                              .attr("class", "y axis")
+                              .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                              .call(yAxis);
+                          var lineGen = d3.line()
+                              .x(function(d) {
+                                  return xScale(d.Date);
+                              })
+                              .y(function(d) {
+                                  return yScale(d.Count);
+                              });
+                          vis.append('svg:path')
+                              .attr('d', lineGen(years[0]))
+                              .attr('stroke', 'green')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+
+
+                          var vis = d3.select("#years_email"),
+                              WIDTH = 1000,
+                              HEIGHT = 500,
+                              MARGINS = {
+                                  top: 30,
+                                  right: 20,
+                                  bottom: 20,
+                                  left: 50
+                              },
+                              xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+                              yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, yearMax[1]]),
+                              xAxis = d3.axisBottom(xScale),
+                              yAxis = d3.axisLeft(yScale);
+
+                          vis.append("text")
+                              .attr("x", (WIDTH / 2))
+                              .attr("y", 0 - (MARGINS.top / 2))
+                              .attr("text-anchor", "middle")
+                              .style("font-size", "16px")
+.style("color", "black")
+                              .style("text-decoration", "underline")
+                              .text("Emails per Year");
+
+                          vis.append("svg:g")
+                              .attr("class", "x axis")
+                              .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                              .call(xAxis);
+                          vis.append("svg:g")
+                              .attr("class", "y axis")
+                              .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                              .call(yAxis);
+                          var lineGen = d3.line()
+                              .x(function(d) {
+                                  return xScale(d.Date);
+                              })
+                              .y(function(d) {
+                                  return yScale(d.Count);
+                              });
+                          vis.append('svg:path')
+                              .attr('d', lineGen(years[1]))
+                              .attr('stroke', 'blue')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+
+
+                          var vis = d3.select("#years_purchase"),
+                              WIDTH = 1000,
+                              HEIGHT = 500,
+                              MARGINS = {
+                                  top: 30,
+                                  right: 20,
+                                  bottom: 20,
+                                  left: 50
+                              },
+                              xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+                              yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, yearMax[2]]),
+                              xAxis = d3.axisBottom(xScale),
+                              yAxis = d3.axisLeft(yScale);
+
+                          vis.append("text")
+                              .attr("x", (WIDTH / 2))
+                              .attr("y", 0 - (MARGINS.top / 2))
+                              .attr("text-anchor", "middle")
+                              .style("font-size", "16px")
+.style("color", "black")
+                              .style("text-decoration", "underline")
+                              .text("Purchases per Year");
+
+                          vis.append("svg:g")
+                              .attr("class", "x axis")
+                              .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                              .call(xAxis);
+                          vis.append("svg:g")
+                              .attr("class", "y axis")
+                              .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                              .call(yAxis);
+                          var lineGen = d3.line()
+                              .x(function(d) {
+                                  return xScale(d.Date);
+                              })
+                              .y(function(d) {
+                                  return yScale(d.Count);
+                              });
+                          vis.append('svg:path')
+                              .attr('d', lineGen(years[2]))
+                              .attr('stroke', 'red')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
+
+
+                          var vis = d3.select("#years_meeting"),
+                              WIDTH = 1000,
+                              HEIGHT = 500,
+                              MARGINS = {
+                                  top: 30,
+                                  right: 20,
+                                  bottom: 20,
+                                  left: 50
+                              },
+                              xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
+                              yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, yearMax[3]]),
+                              xAxis = d3.axisBottom(xScale),
+                              yAxis = d3.axisLeft(yScale);
+
+                          vis.append("text")
+                              .attr("x", (WIDTH/ 2))
+                              .attr("y", 0 - (MARGINS.top / 2))
+                              .attr("text-anchor", "middle")
+                              .style("font-size", "16px")
+.style("color", "black")
+                              .style("text-decoration", "underline")
+                              .text("Meetings per Year");
+
+                          vis.append("svg:g")
+                              .attr("class", "x axis")
+                              .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                              .call(xAxis);
+                          vis.append("svg:g")
+                              .attr("class", "y axis")
+                              .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                              .call(yAxis);
+                          var lineGen = d3.line()
+                              .x(function(d) {
+                                  return xScale(d.Date);
+                              })
+                              .y(function(d) {
+                                  return yScale(d.Count);
+                              });
+                          vis.append('svg:path')
+                              .attr('d', lineGen(years[3]))
+                              .attr('stroke', 'black')
+                              .attr('stroke-width', 2)
+                              .attr('fill', 'none');
 					  }
 					});
 				  }
@@ -338,187 +1000,12 @@
 				  });
 				  
 						
-					}catch(err){
-					
-					}
-					
-				function redrawGraph() {
-				  console.log("Restart");
-				  var drop = document.getElementById("timescale");
-				  var value =  drop.options[drop.selectedIndex].value;
-				  var hasCall = document.getElementById("callCheck").checked;
-				  var hasEmail = document.getElementById("emailCheck").checked;
-				  var hasMeeting = document.getElementById("meetingCheck").checked;
-				  var hasPurchase = document.getElementById("purchaseCheck").checked;
-				  var max = 0;
-				  switch(value){
-					case "Day": 
-						if(hasCall && dayMax[0] > max){
-							max = dayMax[0];
-						}
-						if(hasEmail && dayMax[1] > max){
-							max = dayMax[1];
-						}
-						if(hasMeeting && dayMax[2] > max){
-							max = dayMax[2];
-						}
-						if(hasPurchase && dayMax[3] > max){
-							max = dayMax[3];
-						}
-						break;
-					case "Month":
-						if(hasCall && monthMax[0] > max){
-							max = monthMax[0];
-						}
-						if(hasEmail && monthMax[1] > max){
-							max = monthMax[1];
-						}
-						if(hasMeeting && monthMax[2] > max){
-							max = monthMax[2];
-						}
-						if(hasPurchase && monthMax[3] > max){
-							max = monthMax[3];
-						}
-						break;
-					case "Year":
-						if(hasCall && yearMax[0] > max){
-							max = yearMax[0];
-						}
-						if(hasEmail && yearMax[1] > max){
-							max = yearMax[1];
-						}
-						if(hasMeeting && yearMax[2] > max){
-							max = yearMax[2];
-						}
-						if(hasPurchase && yearMax[3] > max){
-							max = yearMax[3];
-						}
-				  }
-				  vis.select("*").remove();
-				  vis = d3.select("#visualisation"),
-								WIDTH = 1000,
-								HEIGHT = 500,
-								MARGINS = {
-									top: 20,
-									right: 20,
-									bottom: 20,
-									left: 50
-								},
-								xScale = d3.scaleTime().range([MARGINS.left, WIDTH - MARGINS.right]).domain([minDate, maxDate]),
-								yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, max]),
-								xAxis = d3.axisBottom(xScale),
-								yAxis = d3.axisLeft(yScale);
-							
-							vis.append("svg:g")
-								.attr("class", "x axis")
-								.attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
-								.call(xAxis);
-							vis.append("svg:g")
-								.attr("class", "y axis")
-								.attr("transform", "translate(" + (MARGINS.left) + ",0)")
-								.call(yAxis);
-							var lineGen = d3.line()
-								.x(function(d) {
-									return xScale(d.Date);
-								})
-								.y(function(d) {
-									return yScale(d.Count);
-								});
-							switch(value){
-								case "Day":
-									if(hasCall){
-										vis.append('svg:path')
-											.attr('d', lineGen(days[0]))
-											.attr('stroke', 'green')
-											.attr('stroke-width', 2)
-											.attr('fill', 'none');
-									}
-									if(hasEmail){		
-										vis.append('svg:path')
-											.attr('d', lineGen(days[1]))
-											.attr('stroke', 'blue')
-											.attr('stroke-width', 2)
-											.attr('fill', 'none');
-									}
-									if(hasMeeting){
-										vis.append('svg:path')
-											.attr('d', lineGen(days[2]))
-											.attr('stroke', 'red')
-											.attr('stroke-width', 2)
-											.attr('fill', 'none');
-									}
-									if(hasPurchase){							
-										vis.append('svg:path')
-											.attr('d', lineGen(days[3]))
-											.attr('stroke', 'black')
-											.attr('stroke-width', 2)
-											.attr('fill', 'none');
-									}
-									break;
-								case "Month":
-									if(hasCall){
-										vis.append('svg:path')
-											.attr('d', lineGen(months[0]))
-											.attr('stroke', 'green')
-											.attr('stroke-width', 2)
-											.attr('fill', 'none');
-									}
-									if(hasEmail){		
-										vis.append('svg:path')
-											.attr('d', lineGen(months[1]))
-											.attr('stroke', 'blue')
-											.attr('stroke-width', 2)
-											.attr('fill', 'none');
-									}
-									if(hasMeeting){		
-										vis.append('svg:path')
-											.attr('d', lineGen(months[2]))
-											.attr('stroke', 'red')
-											.attr('stroke-width', 2)
-											.attr('fill', 'none');
-									}
-									if(hasPurchase){		
-										vis.append('svg:path')
-											.attr('d', lineGen(months[3]))
-											.attr('stroke', 'black')
-											.attr('stroke-width', 2)
-											.attr('fill', 'none');
-									}
-									break;
-								case "Year":
-									if(hasCall){
-										vis.append('svg:path')
-											.attr('d', lineGen(years[0]))
-											.attr('stroke', 'green')
-											.attr('stroke-width', 2)
-											.attr('fill', 'none');
-									}
-									if(hasEmail){		
-										vis.append('svg:path')
-											.attr('d', lineGen(years[1]))
-											.attr('stroke', 'blue')
-											.attr('stroke-width', 2)
-											.attr('fill', 'none');
-									}
-									if(hasMeeting){		
-										vis.append('svg:path')
-											.attr('d', lineGen(years[2]))
-											.attr('stroke', 'red')
-											.attr('stroke-width', 2)
-											.attr('fill', 'none');
-									}
-									if(hasPurchase){		
-										vis.append('svg:path')
-											.attr('d', lineGen(years[3]))
-											.attr('stroke', 'black')
-											.attr('stroke-width', 2)
-											.attr('fill', 'none');
-									}
-							}
-				}
+					}catch(err) {
+
+                }
 				console.log("Finished");
 			</script>
-			<input type="file" id="csv-file" name="files"/>
+
         </div>
 
     </div>
