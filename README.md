@@ -45,6 +45,6 @@ How do the group’s interactions change over time?</li>
 <h5>Installing Server</h5>
 <p>In Command Line or whatever MACs use, run "npm install -g http-server"</p>
 <h5>To Run Server</h5>
-<p>cd to the correct folder, then run "http-server &"</p>
+<p>cd to the correct folder, then run "http-server -e htm"</p>
 <p>Go to the url that it provides</p>
 
